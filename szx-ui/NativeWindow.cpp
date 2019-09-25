@@ -125,6 +125,7 @@ void NativeWindow::ShowWindow(BOOL show, BOOL takeFocus)
 
 BOOL NativeWindow::OnDestroy()
 {
+	::PostQuitMessage(0);
 	return TRUE;
 }
 

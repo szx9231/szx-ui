@@ -1,11 +1,17 @@
 #include <Windows.h>
 #include "../szx-ui/NativeWindow.h"
+#include "../szx-ui/UIWindow.h"
+
+class MainWindow : public UIWindow
+{
+
+};
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int CmdShow)
 {
-	NativeWindow nativeWindow;
-	nativeWindow.Create(NULL,L"主窗口",WS_OVERLAPPEDWINDOW | WS_VISIBLE,0,CW_USEDEFAULT,CW_USEDEFAULT,300,350);
-	nativeWindow.ShowWindow(TRUE, TRUE);
+	MainWindow mainWindow;
+	mainWindow.Create(NULL,L"主窗口",WS_OVERLAPPEDWINDOW | WS_VISIBLE,0,CW_USEDEFAULT,CW_USEDEFAULT,300,350);
+	mainWindow.ShowWindow(TRUE, TRUE);
 
 	MSG msg;
 	BOOL bRet;
