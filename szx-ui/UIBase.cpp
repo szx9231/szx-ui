@@ -103,3 +103,27 @@ UIRect	UIRect::IntersectRect(const UIRect *first,const UIRect *second)
 	::IntersectRect(&rect,first,second);
 	return rect;
 }
+
+/////////////////////////////////////////UISize////////////////////////////////////////////////////
+UISize::UISize()
+{
+	cx = cy = 0;
+}
+
+UISize::UISize(const SIZE &src)
+{
+	cx = src.cx;
+	cy = src.cy;
+}
+
+UISize::UISize(const RECT &rc)
+{
+	cx = rc.right - rc.left;
+	cy = rc.bottom - rc.top;
+}
+
+UISize::UISize(int _cx, int _cy)
+{
+	cx = _cx;
+	cy = _cy;
+}

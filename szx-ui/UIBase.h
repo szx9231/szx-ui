@@ -29,3 +29,13 @@ public:
 
 typedef COLORREF UIColor;
 typedef LOGFONT	 UIFont;
+
+//UISize
+class UISize : public tagSIZE
+{
+public:
+	UISize();
+	UISize(const SIZE &src);
+	UISize(const RECT &rc);
+	UISize(int cx, int cy);
+};

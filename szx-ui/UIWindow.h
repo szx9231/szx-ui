@@ -1,5 +1,6 @@
 #pragma once
 #include "NativeWindow.h"
+#include "UIRender.h"
 
 class UIControl;
 /*
