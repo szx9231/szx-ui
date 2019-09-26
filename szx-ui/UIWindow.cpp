@@ -49,14 +49,15 @@ void UIWindow::OnPaint()
 	UIRect uiRect(10, 10, 200, 20);
 	std::wstring wstr = L"test";
 	COLORREF colorrrefRGB = RGB(0,0,0);
-	{
-		UIRender uiRender(hdc, rect.right - rect.left, rect.bottom - rect.top);
-
-		uiRender.Text(wstr.c_str(), wstr.length(), &uiRect,colorrrefRGB,  DT_SINGLELINE| DT_NOPREFIX | DT_EDITCONTROL);
-
-		uiRender.Rectangle(&uiRect, colorrrefRGB);
-	}
 	
+	UIRender* uiRender = UIRender::Instance();
+	uiRender->BeginPaint(hdc, rect.right - rect.left, rect.bottom - rect.top);
+
+	uiRender->Text(wstr.c_str(), wstr.length(), &uiRect,colorrrefRGB,  DT_SINGLELINE| DT_NOPREFIX | DT_EDITCONTROL);
+
+	uiRender->Rectangle(&uiRect, colorrrefRGB);
+
+	uiRender->EndPaint();
 
 	::EndPaint(m_hwnd, &ps);
 }

@@ -5,14 +5,28 @@
 UIRender::UIRender(HDC hdc,int width,int height)
 	: m_hdcSrc(hdc), m_width(width), m_height(height)
 {
+	
+}
+
+
+UIRender::~UIRender(void)
+{
+	
+}
+
+void UIRender::BeginPaint(HDC hdc,int width,int height)
+{
+	m_hdcSrc = hdc;
+	m_width = width;
+	m_height = height;
+
 	m_hdcMem	= CreateCompatibleDC(m_hdcSrc);
 	m_hBitmap		= CreateCompatibleBitmap(m_hdcSrc,m_width,m_height);
 	m_hBitmapOld	= (HBITMAP)SelectObject(m_hdcMem,m_hBitmap);
 	BitBlt(m_hdcMem,0,0,m_width,m_height,m_hdcSrc,0,0,WHITENESS);
 }
 
-
-UIRender::~UIRender(void)
+void UIRender::EndPaint()
 {
 	BitBlt(m_hdcSrc,0,0,m_width,m_height,m_hdcMem,0,0,SRCCOPY);
 	SelectObject(m_hdcSrc,m_hBitmapOld);
