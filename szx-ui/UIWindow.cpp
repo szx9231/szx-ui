@@ -2,6 +2,8 @@
 #include "UIWindow.h"
 #include "UIRender.h"
 #include "UIBase.h"
+#include "UIControl.h"
+
 #include <string>
 
 UIWindow::UIWindow(void)
@@ -45,17 +47,14 @@ void UIWindow::OnPaint()
 
 	RECT rect;
 	GetClientRect(m_hwnd,&rect);
-
-	UIRect uiRect(10, 10, 200, 20);
-	std::wstring wstr = L"test";
-	COLORREF colorrrefRGB = RGB(0,0,0);
 	
 	UIRender* uiRender = UIRender::Instance();
 	uiRender->BeginPaint(hdc, rect.right - rect.left, rect.bottom - rect.top);
 
-	uiRender->Text(wstr.c_str(), wstr.length(), &uiRect,colorrrefRGB,  DT_SINGLELINE| DT_NOPREFIX | DT_EDITCONTROL);
-
-	uiRender->Rectangle(&uiRect, colorrrefRGB);
+	if(m_rootControl)
+	{
+		m_rootControl->Render(&UIRect(rect));
+	}
 
 	uiRender->EndPaint();
 

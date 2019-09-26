@@ -23,6 +23,7 @@ public:
 	virtual LRESULT HandleMessages(UINT message, WPARAM wParam, LPARAM lParam);
 	void AddRootControl(UIControl* pUIControl);
 	void OnPaint();
+	
 public:
 	UIControl* m_rootControl;
 };

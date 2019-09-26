@@ -1,12 +1,14 @@
 #pragma once
 #include "UIBase.h"
+#include "UIWindow.h"
+
 #include <vector>
 #include <string>
 
 class UIControl
 {
 public:
-	UIControl(void);
+	UIControl(UIWindow* parentWindow);
 	virtual ~UIControl(void);
 public:
 	void SetAttribute(const std::wstring& wstrName, const std::wstring& wstrValue);
@@ -25,5 +27,6 @@ private:
 	UIRect m_rectPosition;// 控件位置(相对于父窗口)
 	UISize m_size;// 控件尺寸
 	std::vector<UIControl*> m_children;// 子控件
+	UIWindow* m_parentWindow;
 };
 

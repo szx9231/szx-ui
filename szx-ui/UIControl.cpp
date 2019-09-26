@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <assert.h>
 
-UIControl::UIControl(void)
+UIControl::UIControl(UIWindow* parentWindow)
+	: m_parentWindow(parentWindow)
 {
 }
 
@@ -57,4 +58,23 @@ void UIControl::Render(UIRect* rectWindow)
 {
 	// 生成该控件和窗口的交集区域
 	UIRect rect = UIRect::IntersectRect(&m_rectPosition, rectWindow);
+	HWND hwnd = m_parentWindow->GetHWND();
+	HDC hdc = ::GetDC(hwnd);
+
+	UIRender::Instance()->SelectClipedRect(&rect);
+	RenderSelf(&rect);
+
+	for(auto iter : m_children)
+	{
+		iter->Render(&rect);
+	}
+}
+
+void UIControl::RenderSelf(UIRect* rect)
+{
+	assert(rect != NULL);
+
+	std::wstring wstr = L"test";
+	COLORREF colorrrefRGB = RGB(0,0,0);
+	UIRender::Instance()->Text(wstr.c_str(), wstr.length(), rect, colorrrefRGB, DT_SINGLELINE| DT_NOPREFIX | DT_EDITCONTROL);
 }
