@@ -85,6 +85,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIControl.h" />
+    <ClInclude Include="UIInputBox.h" />
     <ClInclude Include="UIRender.h" />
     <ClInclude Include="UIWindow.h" />
   </ItemGroup>
@@ -96,6 +97,7 @@
     </ClCompile>
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIControl.cpp" />
+    <ClCompile Include="UIInputBox.cpp" />
     <ClCompile Include="UIRender.cpp" />
     <ClCompile Include="UIWindow.cpp" />
   </ItemGroup>
