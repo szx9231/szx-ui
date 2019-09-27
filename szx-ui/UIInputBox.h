@@ -13,18 +13,21 @@
 class UIInputBoxWindow;
 class UIInputBox : public UIControl
 {
-public:
-    UIInputBox(UIWindow* parentWindow);
-    virtual ~UIInputBox(void);
-public:
-    virtual void SetAttribute(const std::wstring& wstrName, const std::wstring& wstrValue);
-    virtual void RenderSelf(UIRect* rect);
+    public:
+        UIInputBox(UIWindow* parentWindow);
+        virtual ~UIInputBox(void);
+    public:
+        virtual void SetAttribute(const std::wstring& wstrName, const std::wstring& wstrValue);
 
-private:
-    std::wstring m_wstrPlaceHolder;
-    std::wstring m_wstrValue;
-    friend class UIInputBoxWindow;
-    UIInputBoxWindow* m_ptrInputBoxWindow;
+        virtual void SetTextValue(const std::wstring& wstrTextValue) { m_wstrValue = wstrTextValue;}
+
+        virtual void RenderSelf(UIRect* rect);
+
+    private:
+        std::wstring m_wstrPlaceHolder;
+        std::wstring m_wstrValue;
+        friend class UIInputBoxWindow;
+        UIInputBoxWindow* m_ptrInputBoxWindow;
 };
 
 /*
@@ -32,10 +35,13 @@ private:
  */
 class UIInputBoxWindow : public NativeWindow
 {
-public:
-    void Init(UIInputBox* ptrInputBox);
-    virtual wchar_t* GetWindowClassName() {return L"inputbox_window";}
-    virtual const wchar_t* GetSuperClassName() const {return L"Edit";}
-    virtual LRESULT	HandleMessages(UINT message, WPARAM wParam, LPARAM lParam);
+    public:
+        void Init(UIInputBox* ptrInputBox);
+        virtual wchar_t* GetWindowClassName() {return L"inputbox_window";}
+        virtual const wchar_t* GetSuperClassName() const {return L"Edit";}
+        virtual LRESULT	HandleMessages(UINT message, WPARAM wParam, LPARAM lParam);
+		virtual BOOL OnDestroy();
+    private:
+        UIInputBox* m_ptrInputbox;
 };
 

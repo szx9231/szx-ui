@@ -13,6 +13,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
     MainWindow mainWindow;
     mainWindow.Create(NULL, L"Ö÷´°¿Ú", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 0, CW_USEDEFAULT, CW_USEDEFAULT, 300, 350);
+	mainWindow.AsRootWindow();
     mainWindow.ShowWindow(TRUE, TRUE);
 
     UIControl* control = new UIInputBox(&mainWindow);

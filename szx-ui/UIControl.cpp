@@ -36,7 +36,7 @@ void UIControl::SetAttribute(const std::wstring& wstrName, const std::wstring& w
         m_size.cx = width;
         m_size.cy = height;
     }
-    else if (wstrName == L"position")
+    else if(wstrName == L"position")
     {
         int left, top, right, bottom;
         swscanf_s(wstrValue.c_str(), L"%d %d %d %d", &left, &top, &right, &bottom);

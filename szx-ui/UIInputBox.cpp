@@ -19,19 +19,19 @@ UIInputBox::~UIInputBox(void)
 
 void UIInputBox::RenderSelf(UIRect* rect)
 {
-    /* COLORREF colorrrefRGB = RGB(0, 0, 0);
+    COLORREF colorrrefRGB = RGB(0, 0, 0);
     UIRender::Instance()->Rectangle(rect, colorrrefRGB);
 
     if(m_wstrValue.length() != 0)
     {
-    UIColor stringColor = RGB(0, 0, 0);
-    UIRender::Instance()->Text(m_wstrValue.c_str(), m_wstrValue.length(), rect, stringColor, DT_SINGLELINE | DT_NOPREFIX | DT_EDITCONTROL);
+        UIColor stringColor = RGB(0, 0, 0);
+        UIRender::Instance()->Text(m_wstrValue.c_str(), m_wstrValue.length(), rect, stringColor, DT_SINGLELINE | DT_NOPREFIX | DT_EDITCONTROL);
     }
     else if(m_wstrPlaceHolder.length() != 0)
     {
-    UIColor placeHolderColor = RGB(100, 100, 100);
-    UIRender::Instance()->Text(m_wstrPlaceHolder.c_str(), m_wstrPlaceHolder.length(), rect, placeHolderColor, DT_SINGLELINE | DT_NOPREFIX | DT_EDITCONTROL);
-    }*/
+        UIColor placeHolderColor = RGB(100, 100, 100);
+        UIRender::Instance()->Text(m_wstrPlaceHolder.c_str(), m_wstrPlaceHolder.length(), rect, placeHolderColor, DT_SINGLELINE | DT_NOPREFIX | DT_EDITCONTROL);
+    }
 
     if(m_ptrInputBoxWindow == NULL)
     {
@@ -61,6 +61,7 @@ void UIInputBox::SetAttribute(const std::wstring& wstrName, const std::wstring& 
 UIFont *GetGlobalEditFont()
 {
     static UIFont *global_font = NULL;
+
     if(global_font == NULL)
     {
         global_font = new UIFont();
@@ -73,12 +74,15 @@ UIFont *GetGlobalEditFont()
         global_font->lfPitchAndFamily		= VARIABLE_PITCH | FF_SWISS;
         wcscpy_s(global_font->lfFaceName, L"SimSum");
     }
+
     return global_font;
 }
 
 void UIInputBoxWindow::Init(UIInputBox* ptrInputBox)
 {
     assert(ptrInputBox);
+
+    m_ptrInputbox = ptrInputBox;
 
     UIRect rect = ptrInputBox->GetPositionRect();
     rect.Deflate(1, 3);
@@ -95,9 +99,36 @@ void UIInputBoxWindow::Init(UIInputBox* ptrInputBox)
     Edit_SetSel(hwnd, 0, -1);
     ::ShowWindow(hwnd, SW_SHOWNOACTIVATE);
     ::SetFocus(hwnd);
+
+
 }
 
 LRESULT UIInputBoxWindow::HandleMessages(UINT message, WPARAM wParam, LPARAM lParam)
 {
+    assert(m_ptrInputbox != NULL);
+
+    switch(message)
+    {
+        case WM_KILLFOCUS:
+        {
+            std::wstring wstrWindowText;
+            GetWindowText(wstrWindowText);
+            m_ptrInputbox->SetTextValue(wstrWindowText);
+            PostMessage(WM_CLOSE);
+            break;
+        }
+
+        default:
+            break;
+    }
+
     return __super::HandleMessages(message, wParam, lParam);
+}
+
+BOOL UIInputBoxWindow::OnDestroy()
+{
+	__super::OnDestroy();
+	m_ptrInputbox->m_ptrInputBoxWindow = NULL;
+	delete this;
+	return TRUE;
 }
