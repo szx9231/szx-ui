@@ -5,7 +5,7 @@
 #include <assert.h>
 
 UIControl::UIControl(UIWindow* parentWindow)
-    : m_parentWindow(parentWindow)
+    : m_parentWindow(parentWindow), m_parentControl(NULL)
 {
 }
 
@@ -73,4 +73,64 @@ void UIControl::Render(UIRect* rectWindow)
 void UIControl::RenderSelf(UIRect* rect)
 {
     assert(rect != NULL);
+}
+
+UIControl* UIControl::FindControlByPosition(const UIPoint& point)
+{
+    UIControl* targetControl = this;
+
+    for(auto child : m_children)
+    {
+        if(child->IsMouseInControl(point))
+        {
+            targetControl = child->FindControlByPosition(point);
+            break;
+        }
+    }
+
+    return targetControl;
+}
+
+BOOL UIControl::IsMouseInControl(const UIPoint& point)
+{
+    return ::PtInRect(&m_rectPosition, point);
+}
+
+BOOL UIControl::DispathMouseMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+  if(OnMouseMessage(message, wParam, lParam) == FALSE)
+  {
+	  UIControl* parentControl = GetParentControl();
+	  if(parentControl)
+	  {
+		  parentControl->DispathMouseMessage(message, wParam, lParam);
+	  }
+	  
+  }
+
+  return TRUE;
+}
+
+BOOL UIControl::OnLButtonDown(UINT flag, const UIPoint &point)
+{
+	return FALSE;
+}
+
+BOOL UIControl::OnMouseMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UIPoint	point((short)LOWORD(lParam), (short)HIWORD(lParam));
+	UINT flag = (UINT)wParam;
+
+	BOOL messageHandled = FALSE;
+	switch(message)
+	{
+	case WM_LBUTTONDOWN:
+		messageHandled = OnLButtonDown(flag, point);
+		break;
+
+	default:
+		break;
+	}
+
+	return messageHandled;
 }

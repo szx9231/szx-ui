@@ -32,13 +32,6 @@ void UIInputBox::RenderSelf(UIRect* rect)
         UIColor placeHolderColor = RGB(100, 100, 100);
         UIRender::Instance()->Text(m_wstrPlaceHolder.c_str(), m_wstrPlaceHolder.length(), rect, placeHolderColor, DT_SINGLELINE | DT_NOPREFIX | DT_EDITCONTROL);
     }
-
-    if(m_ptrInputBoxWindow == NULL)
-    {
-        m_ptrInputBoxWindow = new UIInputBoxWindow();
-        m_ptrInputBoxWindow->Init(this);
-    }
-
 }
 
 void UIInputBox::SetAttribute(const std::wstring& wstrName, const std::wstring& wstrValue)
@@ -53,6 +46,17 @@ void UIInputBox::SetAttribute(const std::wstring& wstrName, const std::wstring& 
     {
         m_wstrValue = wstrValue;
     }
+}
+
+BOOL UIInputBox::OnLButtonDown(UINT flag, const UIPoint &point)
+{
+	if(m_ptrInputBoxWindow == NULL)
+	{
+		m_ptrInputBoxWindow = new UIInputBoxWindow();
+		m_ptrInputBoxWindow->Init(this);
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////////

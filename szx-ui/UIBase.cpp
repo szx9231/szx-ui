@@ -127,3 +127,27 @@ UISize::UISize(int _cx, int _cy)
 	cx = _cx;
 	cy = _cy;
 }
+
+////////////////////////////////////////UIPoint//////////////////////////////////////////
+UIPoint::UIPoint()
+{
+	x = y = 0;
+}
+
+UIPoint::UIPoint(const POINT &src)
+{
+	x = src.x;
+	y = src.y;
+}
+
+UIPoint::UIPoint(int _x, int _y)
+{
+	x = _x;
+	y = _y;
+}
+
+UIPoint::UIPoint(LPARAM lParam)
+{
+	x = GET_X_LPARAM(lParam);
+	y = GET_Y_LPARAM(lParam);
+}

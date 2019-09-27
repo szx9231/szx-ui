@@ -23,6 +23,8 @@ class UIInputBox : public UIControl
 
         virtual void RenderSelf(UIRect* rect);
 
+		virtual BOOL OnLButtonDown(UINT flag, const UIPoint &point);
+
     private:
         std::wstring m_wstrPlaceHolder;
         std::wstring m_wstrValue;

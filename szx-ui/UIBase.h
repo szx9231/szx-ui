@@ -39,3 +39,13 @@ public:
 	UISize(const RECT &rc);
 	UISize(int cx, int cy);
 };
+
+//UIPoint
+class  UIPoint : public tagPOINT
+{
+public:
+	UIPoint();
+	UIPoint(const POINT &src);
+	UIPoint(int x, int y);
+	UIPoint(LPARAM lParam);
+};
